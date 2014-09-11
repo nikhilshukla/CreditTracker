@@ -1135,14 +1135,15 @@ containing a value of this type.
         public static final int ic_launcher=0x7f02005a;
         public static final int login_bg=0x7f02005b;
         public static final int login_button=0x7f02005c;
-        public static final int login_facebook_button=0x7f02005d;
-        public static final int login_logo=0x7f02005e;
-        public static final int login_twitter_button=0x7f02005f;
-        public static final int password_icon=0x7f020060;
-        public static final int password_input_field=0x7f020061;
-        public static final int setting_icon_dots=0x7f020062;
-        public static final int username_email_icon=0x7f020063;
-        public static final int username_input_field=0x7f020064;
+        public static final int login_button_click=0x7f02005d;
+        public static final int login_facebook_button=0x7f02005e;
+        public static final int login_logo=0x7f02005f;
+        public static final int login_twitter_button=0x7f020060;
+        public static final int password_icon=0x7f020061;
+        public static final int password_input_field=0x7f020062;
+        public static final int setting_icon_dots=0x7f020063;
+        public static final int username_email_icon=0x7f020064;
+        public static final int username_input_field=0x7f020065;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
