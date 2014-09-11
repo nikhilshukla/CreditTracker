@@ -1,6 +1,7 @@
 package in.qubit.credittracker;
 
 import in.qubit.credittracker.R;
+import in.qubit.credittracker.assets.CustomTypeface;
 
 import com.parse.LogInCallback;
 import com.parse.Parse;
@@ -59,10 +60,11 @@ public class LoginActivity extends ActionBarActivity{
 
 	public void validate()
 	{
-		Typeface type = Typeface.createFromAsset(getAssets(),"fonts/ComicRelief.ttf"); 
+		//Typeface type = Typeface.createFromAsset(getAssets(),"fonts/ComicRelief.ttf"); 
 		username = (EditText) findViewById(R.id.user);
 		password = (EditText) findViewById(R.id.pass);
-		username.setTypeface(type);
+		username.setTypeface(CustomTypeface.comicRelief(this));
+		password.setTypeface(CustomTypeface.comicRelief(this));
 		//username.setTypeface(type);
 		//password.setTypeface(type);
 		login = (Button) findViewById(R.id.lgoinbtn);
