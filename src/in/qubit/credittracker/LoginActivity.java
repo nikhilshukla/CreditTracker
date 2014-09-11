@@ -59,9 +59,10 @@ public class LoginActivity extends ActionBarActivity{
 
 	public void validate()
 	{
-		//Typeface type = Typeface.createFromAsset(getAssets(),"fonts/ComicSans.ttf"); 
+		Typeface type = Typeface.createFromAsset(getAssets(),"fonts/ComicRelief.ttf"); 
 		username = (EditText) findViewById(R.id.user);
 		password = (EditText) findViewById(R.id.pass);
+		username.setTypeface(type);
 		//username.setTypeface(type);
 		//password.setTypeface(type);
 		login = (Button) findViewById(R.id.lgoinbtn);

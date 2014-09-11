@@ -23,23 +23,24 @@
 
         <EditText
             android:id="@+id/user"
-            android:typeface="serif"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:drawablePadding="10dp"
-            android:hint="E-mail address"
-            android:textColorHint="@color/Gray"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/username_input_field"
             android:drawableLeft="@drawable/username_email_icon"
-            android:ems="10" >
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="E-mail address"
+            android:padding="12dp"
+            android:textColorHint="@color/Gray"
+            android:textSize="14sp"
+            android:typeface="serif" >
+
         </EditText>
 
         <EditText
             android:id="@+id/pass"
-            android:typeface="serif"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
@@ -51,7 +52,9 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:textColorHint="@color/Gray" />
+            android:textColorHint="@color/Gray"
+            android:textSize="14sp"
+            android:typeface="serif" />
 
     </LinearLayout>
 
