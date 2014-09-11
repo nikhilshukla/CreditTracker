@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="25dp"
+    android:background="@drawable/login_bg" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/login_logo" />
+    
+     <EditText
+            android:id="@+id/edittext_email_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/username_input_field"
+            android:ems="10"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:hint="E-mail address"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:textColorHint="@color/Gray"
+            android:textSize="14sp"
+            android:typeface="serif" >
+
+        </EditText>
+        
+     <EditText
+            android:id="@+id/edittext_name_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:ems="10"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:hint="Your Name"
+            android:padding="10dp"
+            android:layout_marginTop="0.3sp"
+            android:textColorHint="@color/Gray"
+            android:textSize="14sp"
+            android:typeface="serif" >
+
+        </EditText>
+        
+     <EditText
+            android:id="@+id/edittext_phone_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:ems="10"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:hint="Phone"
+            android:padding="10dp"
+            android:layout_marginTop="0.3sp"
+            android:textColorHint="@color/Gray"
+            android:textSize="14sp"
+            android:typeface="serif" >
+
+        </EditText>
+        
+     <EditText
+            android:id="@+id/edittext_password_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/password_input_field"
+            android:ems="10"
+            android:imeOptions="actionNext"
+            android:singleLine="true"
+            android:hint="Password"
+            android:padding="10dp"
+            android:layout_marginTop="0.1sp"
+            android:textColorHint="@color/Gray"
+            android:textSize="14sp"
+            android:typeface="serif" >
+
+        </EditText>
+        
+     <Button
+        android:id="@+id/button_register"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textSize="22sp"
+        android:textColor="#ffffff"
+        />
+
+</LinearLayout>

@@ -23,7 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends ActionBarActivity{
+public class LoginActivity extends ActionBarActivity implements View.OnClickListener {
 
 	ActionBar actionbar;
 	EditText username,password;
@@ -70,40 +70,31 @@ public class LoginActivity extends ActionBarActivity{
 
 	public void validate()
 	{
-		//Typeface type = Typeface.createFromAsset(getAssets(),"fonts/ComicRelief.ttf"); 
 		username = (EditText) findViewById(R.id.user);
 		password = (EditText) findViewById(R.id.pass);
 		username.setTypeface(CustomTypeface.comicRelief(this));
 		password.setTypeface(CustomTypeface.comicRelief(this));
-		//username.setTypeface(type);
-		//password.setTypeface(type);
 		login = (Button) findViewById(R.id.lgoinbtn);
 		login.setTypeface(CustomTypeface.comicRelief(this));
-		login.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				login(username.getText().toString(), password.getText().toString());
-				
-			}
-		});
+		login.setOnClickListener(this);
+		signUp.setOnClickListener(this);
 		
-		login.setOnTouchListener(new OnTouchListener() {
+	}
 
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
-				if(event.getAction() == MotionEvent.ACTION_DOWN) {
-					//login.setBackground(getResources().getDrawable(R.drawable.login_button_click));
-				}
-				if(event.getAction() == MotionEvent.ACTION_UP) {
-					//login.setBackground(getResources().getDrawable(R.drawable.login_button));
-				}
-				return false;
-			}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch(v.getId()) {
+		case R.id.lgoinbtn:
+			login(username.getText().toString(), password.getText().toString());
+			Log.d("Switch", "Login Btn");
+			break;
+		case R.id.signUpButton:
+			Log.d("Switch", "Reg Btn");
+			Intent registrationActivity = new Intent(LoginActivity.this, RegistrationActivity.class);
+			startActivity(registrationActivity);
+			break;
+		}
 			
-		});
-		
 	}
 }
