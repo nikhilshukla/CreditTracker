@@ -20,19 +20,27 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends ActionBarActivity{
 
 	ActionBar actionbar;
 	EditText username,password;
-	Button login;
+	Button login, signUp;
+	TextView forgotPass, newUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Parse.initialize(this, "gCbZZE9zTTYHneADidwaNALuQA4w514bPncz0RaT", "l7ZyESQVlJloSwuezCDe22Kl4GzAVdJeXo3imJc1");
 		setContentView(R.layout.activity_login);
+		forgotPass = (TextView)findViewById(R.id.forgotPassword);
+		forgotPass.setTypeface(CustomTypeface.comicRelief(this));
+		newUser = (TextView)findViewById(R.id.newUser);
+		newUser.setTypeface(CustomTypeface.comicRelief(this));
+		signUp = (Button)findViewById(R.id.signUpButton);
+		signUp.setTypeface(CustomTypeface.comicRelief(this));
 		actionbar = getSupportActionBar();
 		actionbar.hide();
 		validate();
@@ -70,6 +78,7 @@ public class LoginActivity extends ActionBarActivity{
 		//username.setTypeface(type);
 		//password.setTypeface(type);
 		login = (Button) findViewById(R.id.lgoinbtn);
+		login.setTypeface(CustomTypeface.comicRelief(this));
 		login.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -86,10 +95,10 @@ public class LoginActivity extends ActionBarActivity{
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				if(event.getAction() == MotionEvent.ACTION_DOWN) {
-					login.setBackground(getResources().getDrawable(R.drawable.login_button_click));
+					//login.setBackground(getResources().getDrawable(R.drawable.login_button_click));
 				}
 				if(event.getAction() == MotionEvent.ACTION_UP) {
-					login.setBackground(getResources().getDrawable(R.drawable.login_button));
+					//login.setBackground(getResources().getDrawable(R.drawable.login_button));
 				}
 				return false;
 			}
