@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/password_input_field"
             android:ems="10"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
             android:singleLine="true"
             android:hint="Password"
             android:padding="10dp"

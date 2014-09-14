@@ -8,4 +8,9 @@ public class CustomTypeface {
 		Typeface type = Typeface.createFromAsset(act.getAssets(), "fonts/ComicRelief.ttf");
 		return type;
 	}
+	
+	public static Typeface helveticaLightItalic(Activity act) {
+		Typeface type = Typeface.createFromAsset(act.getAssets(), "fonts/Helvetica-Light-Italic.ttf");
+		return type;
+	}
 }

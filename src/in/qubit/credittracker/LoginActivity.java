@@ -43,7 +43,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 		signUp.setTypeface(CustomTypeface.comicRelief(this));
 		actionbar = getSupportActionBar();
 		actionbar.hide();
-		validate();
+		bind();
 	
 	}
 	
@@ -53,14 +53,14 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 			public void done(ParseUser user, ParseException e) {
 				if(user != null) {
 					Log.d("Login", "Success");
-					Toast toast = Toast.makeText(getApplicationContext(), "Login Success.", 4000);
+					Toast toast = Toast.makeText(getApplicationContext(), "Login Success.", 2000);
 					toast.show();
 					Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
 					startActivity(mainActivity);
 				}
 				else {
 					Log.d("Login", "Fail");
-					Toast toast = Toast.makeText(getApplicationContext(), "Username or Password is incorrect.", 4000);
+					Toast toast = Toast.makeText(getApplicationContext(), "Username or Password is incorrect.", 2000);
 					toast.show();
 				}
 			}
@@ -68,7 +68,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 		});
 	}
 
-	public void validate()
+	public void bind()
 	{
 		username = (EditText) findViewById(R.id.user);
 		password = (EditText) findViewById(R.id.pass);
@@ -80,13 +80,27 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 		signUp.setOnClickListener(this);
 		
 	}
+	
+	private void validateAndLogin() {
+		String usernameText = username.getText().toString();
+		String passwordText = password.getText().toString();
+		if(usernameText.isEmpty()) {
+			Toast.makeText(getApplicationContext(), "Enter Username", 3000).show();
+		}
+		else if(passwordText.isEmpty()) {
+			Toast.makeText(getApplicationContext(), "Enter Password", 3000).show();
+		}
+		else {
+			login(usernameText, passwordText);
+		}
+	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch(v.getId()) {
 		case R.id.lgoinbtn:
-			login(username.getText().toString(), password.getText().toString());
+			validateAndLogin();
 			Log.d("Switch", "Login Btn");
 			break;
 		case R.id.signUpButton:
