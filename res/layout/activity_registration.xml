@@ -14,19 +14,20 @@
         android:src="@drawable/login_logo" />
     
      <EditText
-            android:id="@+id/edittext_email_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/username_input_field"
-            android:ems="10"
-            android:imeOptions="actionNext"
-            android:singleLine="true"
-            android:hint="E-mail address"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:textColorHint="@color/Gray"
-            android:textSize="14sp"
-            android:typeface="serif" >
+         android:id="@+id/edittext_email_reg"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="20dp"
+         android:background="@drawable/username_input_field"
+         android:ems="10"
+         android:hint="E-mail address"
+         android:imeOptions="actionNext"
+         android:inputType="textEmailAddress"
+         android:padding="10dp"
+         android:singleLine="true"
+         android:textColorHint="@color/Gray"
+         android:textSize="14sp"
+         android:typeface="serif" >
 
         </EditText>
         
@@ -65,19 +66,20 @@
         </EditText>
         
      <EditText
-            android:id="@+id/edittext_password_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/password_input_field"
-            android:ems="10"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:hint="Password"
-            android:padding="10dp"
-            android:layout_marginTop="0.1sp"
-            android:textColorHint="@color/Gray"
-            android:textSize="14sp"
-            android:typeface="serif" >
+         android:id="@+id/edittext_password_reg"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="0.1sp"
+         android:background="@drawable/password_input_field"
+         android:ems="10"
+         android:hint="Password"
+         android:imeOptions="actionDone"
+         android:inputType="textPassword"
+         android:padding="10dp"
+         android:singleLine="true"
+         android:textColorHint="@color/Gray"
+         android:textSize="14sp"
+         android:typeface="serif" >
 
         </EditText>
         
