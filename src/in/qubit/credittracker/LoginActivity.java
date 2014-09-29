@@ -33,7 +33,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Parse.initialize(this, "gCbZZE9zTTYHneADidwaNALuQA4w514bPncz0RaT", "l7ZyESQVlJloSwuezCDe22Kl4GzAVdJeXo3imJc1");
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if(currentUser!=null) {
+			Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
+			startActivity(mainActivity);
+		}
 		setContentView(R.layout.activity_login);
 		forgotPass = (TextView)findViewById(R.id.forgotPassword);
 		forgotPass.setTypeface(CustomTypeface.comicRelief(this));

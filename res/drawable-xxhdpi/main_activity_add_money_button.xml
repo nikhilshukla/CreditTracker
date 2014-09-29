@@ -3,9 +3,9 @@
     
     
     <item android:state_pressed="true"
-        android:drawable="@drawable/detailpaymenticon_click" />
+        android:drawable="@drawable/addpendingmoneyicon_click" />
     
     <item
-        android:drawable="@drawable/detailpaymenticon" />
+        android:drawable="@drawable/addpendingmoneyicon" />
 
 </selector>
