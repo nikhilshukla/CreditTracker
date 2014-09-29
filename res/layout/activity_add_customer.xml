@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_user_dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+    android:paddingTop="30dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp" >
+
+        <EditText
+            android:id="@+id/edittext_add_customer_activity_cust_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/icon_user_name"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:gravity="center_vertical"
+            android:hint="Name"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textSize="15sp" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/edittext_add_customer_activity_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:drawableLeft="@drawable/icon_user_phone"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:hint="Phone"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:singleLine="true"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edittext_add_customer_activity_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:drawableLeft="@drawable/icon_user_address"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:hint="Address"
+            android:inputType="textMultiLine"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|center_horizontal" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_bar"
+            android:gravity="center_horizontal"
+            android:padding="8dp" >
+
+            <Button
+                android:id="@+id/button_add_customer_activity_tick"
+                android:layout_width="52dp"
+                android:layout_height="48dp"
+                android:background="@drawable/add_cust_tick" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -9,17 +9,20 @@
         android:targetSdkVersion="19" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:logo="@drawable/ic_launcher"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name="CreditTrackerApplication" >
         <activity
             android:name="in.qubit.credittracker.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"
+            android:noHistory="true"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +34,7 @@
             android:name="in.qubit.credittracker.RegistrationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"
+            android:noHistory="true"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.REGISTRATION" />
@@ -45,6 +49,40 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAINACT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="in.qubit.credittracker.AddCustomer"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.ADDCUST" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="in.qubit.credittracker.AddCredit"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.ADDCREDIT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="in.qubit.credittracker.ListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.LISTACT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

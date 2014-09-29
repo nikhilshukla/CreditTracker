@@ -15,35 +15,34 @@
         android:paddingBottom="40dp" >
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button_main_activity_add_cust"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/main_activity_add_cust_button"
-            android:height="60dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/main_activity_add_cust_button"
             android:gravity="center"
-            />
+            android:height="60dp" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/button_main_activity_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button2"
-            android:layout_alignBottom="@+id/button2"
+            android:layout_alignBaseline="@+id/button_main_activity_add_cust"
+            android:layout_alignBottom="@+id/button_main_activity_add_cust"
             android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@+id/button2"
+            android:layout_toLeftOf="@+id/button_main_activity_add_cust"
             android:background="@drawable/main_activity_list_button"
             android:height="60dp" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/button_main_activity_add_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button2"
-            android:layout_alignBottom="@+id/button2"
+            android:layout_alignBaseline="@+id/button_main_activity_add_cust"
+            android:layout_alignBottom="@+id/button_main_activity_add_cust"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/button2"
+            android:layout_toRightOf="@+id/button_main_activity_add_cust"
             android:background="@drawable/main_activity_add_money_button"
             android:height="60dp" />
 
@@ -86,25 +85,23 @@
         android:paddingTop="20dp" >
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/button_main_activity_sms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button5"
-            android:layout_alignBottom="@+id/button5"
+            android:layout_alignBaseline="@+id/button_main_activity_setting"
+            android:layout_alignBottom="@+id/button_main_activity_setting"
             android:layout_marginRight="44dp"
+            android:layout_toLeftOf="@+id/button_main_activity_setting"
             android:background="@drawable/main_activity_sms_button"
-            android:height="60dp"
-            android:layout_toLeftOf="@+id/button5"
-             />
+            android:height="60dp" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/button_main_activity_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/main_activity_setting_button"
-            android:height="60dp"
             android:layout_alignParentRight="true"
-             />
+            android:background="@drawable/main_activity_setting_button"
+            android:height="60dp" />
 
     </RelativeLayout>
 
