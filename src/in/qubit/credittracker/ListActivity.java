@@ -228,6 +228,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
         	ParseQuery<ParseObject> queryOnCustomer = ParseQuery.getQuery("Customers");
         	queryOnCustomer.fromLocalDatastore();
         	List<ParseObject> customerObjectList = null;
+        	List<ParseObject> customerObjectListToBeSend = new ArrayList<ParseObject>();
         	try {
 				customerObjectList = queryOnCustomer.find();
 				Log.i("Customer Find", customerObjectList.toString());
@@ -259,7 +260,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
         		tempParseObject.put("customerId", customerParseObject.getString("name"));
         		tempParseObject.put("amount", sum);
         		
-        		customerObjectList.add(tempParseObject);
+        		customerObjectListToBeSend.add(tempParseObject);
         	}
         	
         	
@@ -274,7 +275,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
         	
             View rootView = inflater.inflate(R.layout.fragment_credit_list, container, false);
             
-            CustomListCredit adapter = new CustomListCredit(getActivity(), customerObjectList);
+            CustomListCredit adapter = new CustomListCredit(getActivity(), customerObjectListToBeSend);
             list=(ListView)rootView.findViewById(R.id.fragment_list_credit);
             list.setAdapter(adapter);
             
