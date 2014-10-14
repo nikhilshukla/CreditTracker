@@ -132,12 +132,12 @@ public class AddCustomer extends BaseActivity {
 		//test.setOnClickListener(this);
 	}
 	
-	public void onBackPressed() 
+	/*public void onBackPressed() 
 	{
 		Intent a = new Intent(this,MainActivity.class);
 		 a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		 startActivity(a);	 
-	}
+	}*/
 	
 	private boolean validate(String name, String phone, String address) {
 		if(name.isEmpty() || phone.isEmpty() || address.isEmpty()) {

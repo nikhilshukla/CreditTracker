@@ -75,6 +75,7 @@ public class BaseActivity extends FragmentActivity
 				case 1:
 					if(currentActivity.compareTo(AddCustomer.class.getName())!=0) {
 						Intent addCustomerActivity = new Intent(BaseActivity.this, AddCustomer.class);
+						addCustomerActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(addCustomerActivity);
 					}
 					mDrawer.closeMenu();
@@ -82,6 +83,7 @@ public class BaseActivity extends FragmentActivity
 				case 2:
 					if(currentActivity.compareTo(AddCredit.class.getName())!=0) {
 						Intent addCreditActivity = new Intent(BaseActivity.this, AddCredit.class);
+						addCreditActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(addCreditActivity);
 					}
 					mDrawer.closeMenu();

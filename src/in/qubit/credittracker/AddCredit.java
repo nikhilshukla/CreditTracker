@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class AddCredit extends BaseActivity implements OnClickListener {
@@ -31,19 +32,6 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 	public ImageView sliderbtn;
 	ArrayAdapter<String> adapter;
 	List<ParseObject> obj;
-	
-	String[] androidBooks = 
-		{
-		"Hello, Android - Ed Burnette",
-		"Professional Android 2 App Dev - Reto Meier",
-		"Unlocking Android - Frank Ableson",
-		"Android App Development - Blake Meike",
-		"Pro Android 2 - Dave MacLean",
-		"Beginning Android 2 - Mark Murphy",
-		"Android Programming Tutorials - Mark Murphy",
-		"Android Wireless App Development - Lauren Darcey",
-		"Pro Android Games - Vladimir Silva",
-		};
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -137,12 +125,12 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 		}
 	}
 	
-	public void onBackPressed() 
+	/*public void onBackPressed() 
 	{
 		Intent a = new Intent(this,MainActivity.class);
 		 a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		 startActivity(a);	 
-	}
+	}*/
 
 	@Override
 	public void onClick(View v) {
@@ -158,6 +146,7 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 				object.put("customerId", name);
 				object.put("amount", Float.parseFloat(amount));
 				object.put("notes", notes);
+				object.put("userId", ParseUser.getCurrentUser().getObjectId());
 				object.pinInBackground(new SaveCallback() {
 					
 					@Override

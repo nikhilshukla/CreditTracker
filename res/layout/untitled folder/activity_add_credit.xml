@@ -15,13 +15,10 @@
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_user_dp" />
+            android:src="@drawable/icon_add_credit_money" />
 
     </LinearLayout>
 
-    <ScrollView android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,52 +27,50 @@
     android:paddingLeft="30dp"
     android:paddingRight="30dp" >
 
-        <EditText
-            android:id="@+id/edittext_add_customer_activity_cust_name"
+        <AutoCompleteTextView
+            android:id="@+id/autocomplete_add_credit_activity_cust_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/icon_user_name"
             android:drawablePadding="8dp"
             android:ems="10"
             android:gravity="center_vertical"
-            android:hint="Name"
+            android:hint="Select Name"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:singleLine="true"
             android:textSize="15sp" >
 
             <requestFocus />
-        </EditText>
+        </AutoCompleteTextView>
 
         <EditText
-            android:id="@+id/edittext_add_customer_activity_phone"
+            android:id="@+id/edittext_add_credit_activity_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="33dp"
-            android:drawableLeft="@drawable/icon_user_phone"
+            android:drawableLeft="@drawable/icon_add_credit_rupee"
             android:drawablePadding="8dp"
             android:ems="10"
-            android:hint="Phone"
+            android:hint="Amount"
             android:imeOptions="actionNext"
             android:inputType="number"
             android:singleLine="true"
             android:textSize="15sp" />
 
         <EditText
-            android:id="@+id/edittext_add_customer_activity_address"
+            android:id="@+id/edittext_add_credit_activity_notes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="33dp"
-            android:drawableLeft="@drawable/icon_user_address"
+            android:drawableLeft="@drawable/icon_add_credit_notes"
             android:drawablePadding="8dp"
             android:ems="10"
-            android:hint="Address"
+            android:hint="Notes"
             android:inputType="textMultiLine"
             android:textSize="15sp" />
 
     </LinearLayout>
-    
-    </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -83,7 +78,6 @@
         android:gravity="bottom|center_horizontal" >
 
         <LinearLayout
-            android:id="@+id/button_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bottom_bar"
@@ -91,7 +85,7 @@
             android:padding="8dp" >
 
             <Button
-                android:id="@+id/button_add_customer_activity_tick"
+                android:id="@+id/button_add_credit_activity_tick"
                 android:layout_width="52dp"
                 android:layout_height="48dp"
                 android:background="@drawable/add_cust_tick" />
