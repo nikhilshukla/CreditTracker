@@ -1,19 +1,11 @@
 package in.qubit.credittracker;
 
-import in.qubit.credittracker.assets.CustomListCredit;
 import in.qubit.credittracker.assets.CustomTypeface;
 
 import java.util.List;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.SaveCallback;
-
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +16,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 public class AddCredit extends BaseActivity implements OnClickListener {
 	
@@ -56,7 +53,6 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 		actionbar.setDisplayShowHomeEnabled(false);
 		actionbar.setDisplayShowTitleEnabled(false);
 		LayoutInflater mInflater = LayoutInflater.from(this);
-
 		View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
 		TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text); 
 		mTitleTextView.setTypeface(CustomTypeface.helveticaLightItalic(this));
@@ -140,6 +136,13 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 			return false;
 		}
 	}
+	
+	public void onBackPressed() 
+	{
+		Intent a = new Intent(this,MainActivity.class);
+		 a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		 startActivity(a);	 
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -172,6 +175,9 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 					
 				});
 			}
+			Intent in = new Intent(AddCredit.this,MainActivity.class);
+			startActivity(in);
+			
 			break;
 //		case R.id.test:
 //			ParseQuery<ParseObject> query = ParseQuery.getQuery("Customers");

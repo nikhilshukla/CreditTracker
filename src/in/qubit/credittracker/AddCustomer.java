@@ -3,6 +3,21 @@ package in.qubit.credittracker;
 import in.qubit.credittracker.assets.CustomTypeface;
 
 import java.util.List;
+import java.util.ListIterator;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -10,23 +25,17 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-public class AddCustomer extends BaseActivity implements OnClickListener {
+public class AddCustomer extends BaseActivity {
 	
 	android.app.ActionBar actionbar;
 	Button buttonAddCustomer, test;
 	EditText inputName, inputPhone, inputAddress;
 	public ImageView sliderbtn;
+	String name,phone,address;
+	int cust_counter=0;
+	int press_flag=1;
+	LinearLayout but_lay;
+	ParseObject object;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,10 +73,68 @@ public class AddCustomer extends BaseActivity implements OnClickListener {
 		inputAddress.setTypeface(CustomTypeface.comicRelief(this));
 		
 		buttonAddCustomer = (Button)findViewById(R.id.button_add_customer_activity_tick);
-		buttonAddCustomer.setOnClickListener(this);
+		but_lay = (LinearLayout) findViewById(R.id.button_lay);
+		but_lay.setBackgroundDrawable(getResources().getDrawable(R.drawable.bottom_bar));
+		buttonAddCustomer.setOnClickListener(new OnClickListener() {
+			
+			@SuppressLint("NewApi")
+			@Override
+			public void onClick(View v) {
+				if(press_flag==1)
+				{
+				name = inputName.getText().toString();
+				phone = inputPhone.getText().toString();
+				address = inputAddress.getText().toString();
+				if(validate(name, phone, address)) {
+					object = new ParseObject("Customers");
+      				ParseQuery<ParseObject> query = ParseQuery.getQuery("Customers");
+      				query.fromLocalDatastore();
+					query.whereEqualTo("name", name);
+					query.findInBackground(new FindCallback<ParseObject>() {
+					    public void done(List<ParseObject> scoreList, ParseException e) {	    	
+					        if (scoreList.isEmpty()==false) 
+					        {
+					            Toast.makeText(getApplicationContext(), "Customer already exists", 2000).show();
+					        	Log.d("cust_name", "Retrieved " + scoreList.size() + " scores");
+					        } 
+					        else 
+					        {
+					  			object.put("name", name);
+								object.put("phone", phone);
+								object.put("address", address);
+								object.pinInBackground(new SaveCallback() {
+									
+									
+									public void done(ParseException e) {
+										Toast.makeText(getApplicationContext(), "Saved on device", 2000).show();
+									}
+								});
+								object.saveEventually(new SaveCallback() {
+								
+									public void done(ParseException e) {
+										// TODO Auto-generated method stub
+										Toast.makeText(getApplicationContext(), "Saved on net", 4000).show();
+									}
+								});
+					        }
+					    }
+					});
+				}
+				but_lay.setBackgroundDrawable(getResources().getDrawable(R.drawable.bottom_bar_dim));
+			}			
+				press_flag=0;
+			}
+		});
 		
 		//test = (Button)findViewById(R.id.test);
 		//test.setOnClickListener(this);
+	}
+	
+	public void onBackPressed() 
+	{
+		Intent a = new Intent(this,MainActivity.class);
+		 a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		 startActivity(a);	 
 	}
 	
 	private boolean validate(String name, String phone, String address) {
@@ -80,52 +147,4 @@ public class AddCustomer extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch(v.getId()) {
-		case R.id.button_add_customer_activity_tick:
-			String name = inputName.getText().toString();
-			String phone = inputPhone.getText().toString();
-			String address = inputAddress.getText().toString();
-			
-			if(validate(name, phone, address)) {
-				ParseObject object = new ParseObject("Customers");
-				object.put("name", name);
-				object.put("phone", phone);
-				object.put("address", address);
-				object.pinInBackground(new SaveCallback() {
-					
-					@Override
-					public void done(ParseException e) {
-						Toast.makeText(getApplicationContext(), "Saved on device", 2000).show();
-					}
-				});
-				object.saveEventually(new SaveCallback() {
-
-					@Override
-					public void done(ParseException e) {
-						// TODO Auto-generated method stub
-						Toast.makeText(getApplicationContext(), "Saved on net", 4000).show();
-					}
-					
-				});
-			}
-			break;
-//		case R.id.test:
-//			ParseQuery<ParseObject> query = ParseQuery.getQuery("Customers");
-//			query.fromLocalDatastore();
-//			query.findInBackground(new FindCallback<ParseObject>() {
-//
-//				@Override
-//				public void done(List<ParseObject> arg0, ParseException arg1) {
-//					// TODO Auto-generated method stub
-//					for(ParseObject object : arg0) {
-//						Toast.makeText(getApplicationContext(), (CharSequence) object.getObjectId(), 4000).show();
-//					}
-//				}
-//				
-//			});
-		}
-	}
 }
