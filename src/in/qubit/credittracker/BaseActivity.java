@@ -2,6 +2,8 @@ package in.qubit.credittracker;
 
 import java.util.List;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import in.qubit.credittracker.assets.CustomList;
@@ -85,6 +87,12 @@ public class BaseActivity extends FragmentActivity
 					mDrawer.closeMenu();
 					break;
 				case 5:
+					try {
+						ParseObject.unpinAll();
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					ParseUser.logOut();
 					Intent loginActivity = new Intent(BaseActivity.this, LoginActivity.class);
 					startActivity(loginActivity);

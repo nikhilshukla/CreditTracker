@@ -290,10 +290,9 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					String[] names =  allnames.toArray(new String[allnames.size()]);				
-					Intent a = new Intent(getActivity(),CredDetailList.class);	
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					String[] names =  allnames.toArray(new String[allnames.size()]);			
+					Intent a = new Intent(getActivity(),CredDetailList.class);
 					a.putExtra("selected", names[position]);
 	  	            startActivity(a);
 				}

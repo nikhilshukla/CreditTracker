@@ -1,11 +1,16 @@
 package in.qubit.credittracker;
 
+import java.util.List;
+
 import in.qubit.credittracker.R;
 import in.qubit.credittracker.assets.CustomTypeface;
 
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import android.content.Intent;
@@ -51,11 +56,42 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 	
 	}
 	
+	private void saveDataOnLocalDatabase(String userId) {
+		ParseQuery<ParseObject> queryCustomers = ParseQuery.getQuery("Customers");
+		queryCustomers.whereEqualTo("userId", userId);
+		queryCustomers.findInBackground(new FindCallback<ParseObject>() {
+
+			@Override
+			public void done(List<ParseObject> objects, ParseException e) {
+				// TODO Auto-generated method stub
+				if(e == null) {
+					ParseObject.pinAllInBackground(objects);
+				}
+			}
+			
+		});
+		
+		ParseQuery<ParseObject> queryCredit = ParseQuery.getQuery("PendingMoney");
+		queryCredit.whereEqualTo("userId", userId);
+		queryCredit.findInBackground(new FindCallback<ParseObject>() {
+
+			@Override
+			public void done(List<ParseObject> objects, ParseException e) {
+				// TODO Auto-generated method stub
+				if(e == null) {
+					ParseObject.pinAllInBackground(objects);
+				}
+			}
+			
+		});
+	}
+	
 	private void login(String username, String password) {
 		ParseUser.logInInBackground(username, password, new LogInCallback() {
 			@Override
 			public void done(ParseUser user, ParseException e) {
 				if(user != null) {
+					saveDataOnLocalDatabase(user.getObjectId());
 					Log.d("Login", "Success");
 					Toast toast = Toast.makeText(getApplicationContext(), "Login Success.", 2000);
 					toast.show();

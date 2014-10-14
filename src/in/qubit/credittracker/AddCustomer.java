@@ -23,6 +23,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class AddCustomer extends BaseActivity {
@@ -102,6 +103,7 @@ public class AddCustomer extends BaseActivity {
 					  			object.put("name", name);
 								object.put("phone", phone);
 								object.put("address", address);
+								object.put("userId", ParseUser.getCurrentUser().getObjectId());
 								object.pinInBackground(new SaveCallback() {
 									
 									
