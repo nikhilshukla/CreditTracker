@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,8 +36,9 @@ public class AddCustomer extends BaseActivity {
 	String name,phone,address;
 	int cust_counter=0;
 	int press_flag=1;
-	LinearLayout but_lay;
+	//LinearLayout but_lay;
 	ParseObject object;
+	ProgressDialog dialog;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,6 +48,11 @@ public class AddCustomer extends BaseActivity {
 		actionbar.setDisplayShowHomeEnabled(false);
 		actionbar.setDisplayShowTitleEnabled(false);
 		LayoutInflater mInflater = LayoutInflater.from(this);
+		
+		dialog = new ProgressDialog(this);
+		dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
 
 		View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
 		TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text); 
@@ -74,8 +81,8 @@ public class AddCustomer extends BaseActivity {
 		inputAddress.setTypeface(CustomTypeface.comicRelief(this));
 		
 		buttonAddCustomer = (Button)findViewById(R.id.button_add_customer_activity_tick);
-		but_lay = (LinearLayout) findViewById(R.id.button_lay);
-		but_lay.setBackgroundDrawable(getResources().getDrawable(R.drawable.bottom_bar));
+		//but_lay = (LinearLayout) findViewById(R.id.button_lay);
+		//but_lay.setBackgroundDrawable(getResources().getDrawable(R.drawable.bottom_bar));
 		buttonAddCustomer.setOnClickListener(new OnClickListener() {
 			
 			@SuppressLint("NewApi")
@@ -87,6 +94,9 @@ public class AddCustomer extends BaseActivity {
 				phone = inputPhone.getText().toString();
 				address = inputAddress.getText().toString();
 				if(validate(name, phone, address)) {
+					dialog.setMessage("Adding a new Customer.");
+			        dialog.show();
+					
 					object = new ParseObject("Customers");
       				ParseQuery<ParseObject> query = ParseQuery.getQuery("Customers");
       				query.fromLocalDatastore();
@@ -95,6 +105,7 @@ public class AddCustomer extends BaseActivity {
 					    public void done(List<ParseObject> scoreList, ParseException e) {	    	
 					        if (scoreList.isEmpty()==false) 
 					        {
+					        	dialog.dismiss();
 					            Toast.makeText(getApplicationContext(), "Customer already exists", 2000).show();
 					        	Log.d("cust_name", "Retrieved " + scoreList.size() + " scores");
 					        } 
@@ -108,21 +119,26 @@ public class AddCustomer extends BaseActivity {
 									
 									
 									public void done(ParseException e) {
-										Toast.makeText(getApplicationContext(), "Saved on device", 2000).show();
+										dialog.dismiss();
+										finish();
+										Toast.makeText(getApplicationContext(), "Customer Added Successfully.", 2000).show();
+										finish();
 									}
 								});
 								object.saveEventually(new SaveCallback() {
 								
 									public void done(ParseException e) {
 										// TODO Auto-generated method stub
-										Toast.makeText(getApplicationContext(), "Saved on net", 4000).show();
+										Toast.makeText(getApplicationContext(), "Customer Saved on Cloud.", 2000).show();
 									}
 								});
+								Intent in = new Intent(AddCustomer.this,MainActivity.class);
+								startActivity(in);
 					        }
 					    }
 					});
 				}
-				but_lay.setBackgroundDrawable(getResources().getDrawable(R.drawable.bottom_bar_dim));
+				//but_lay.setBackgroundDrawable(getResources().getDrawable(R.drawable.bottom_bar_dim));
 			}			
 				press_flag=0;
 			}

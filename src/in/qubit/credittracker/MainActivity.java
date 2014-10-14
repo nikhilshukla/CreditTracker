@@ -1,5 +1,13 @@
 package in.qubit.credittracker;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.List;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import in.qubit.credittracker.assets.CustomTypeface;
@@ -25,6 +33,7 @@ public class MainActivity extends BaseActivity {
 	public Typeface type;
 	public ImageView sliderbtn; 
 	Button addCustBtn, addCreditBtn, listBtn;
+	int moneySum = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,18 +107,44 @@ public class MainActivity extends BaseActivity {
 			
 		});
 		
-		getBalance();
+		
 	
 	}
 	
+	protected void onResume() {
+		super.onResume();
+		
+		getBalance();
+	}
+	
 	public void getBalance()
-	{
+	{	
 		pending = (TextView) findViewById(R.id.pendingmoney);
 		pending.setTypeface(type);
-		pending.setText("300,000\t");
+		pending.setText("\t");
 		
-		ParseUser current = ParseUser.getCurrentUser();
-		Log.i("User Info", current.getObjectId());
+		final NumberFormat formater = new DecimalFormat("##,##,##,###");
+		
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		Log.i("User Info", currentUser.getObjectId());
+		
+		ParseQuery<ParseObject> queryOnCredit = ParseQuery.getQuery("PendingMoney");
+		queryOnCredit.fromLocalDatastore();
+		queryOnCredit.whereEqualTo("userId", currentUser.getObjectId());
+		queryOnCredit.findInBackground(new FindCallback<ParseObject>() {
+
+			@Override
+			public void done(List<ParseObject> objects, ParseException e) {
+				// TODO Auto-generated method stub
+				if(e == null) {
+					for(ParseObject pendingMoneyObjects : objects) {
+						moneySum += pendingMoneyObjects.getInt("amount");
+					}
+					pending.setText(formater.format(moneySum)+"\t");
+				}
+			}
+			
+		});
 	}
 
 }
