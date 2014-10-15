@@ -63,6 +63,7 @@
             android:ems="10"
             android:hint="Phone"
             android:imeOptions="actionNext"
+            android:inputType="phone"
             android:padding="10dp"
             android:singleLine="true"
             android:textColorHint="@color/Gray"

@@ -1,41 +1,49 @@
 package in.qubit.credittracker;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import in.qubit.credittracker.assets.CustomList;
 import in.qubit.credittracker.assets.CustomListCredit;
 import in.qubit.credittracker.assets.CustomListCustomer;
 import in.qubit.credittracker.assets.CustomTypeface;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.widget.Toast;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+@SuppressLint("NewApi")
 public class ListActivity extends BaseActivity implements ActionBar.TabListener {
 
 	 /**
@@ -54,8 +62,10 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
     
     ImageView sliderbtn;
     TextView mTitleTextView;
+    static List<String> allnames;
 
-    public void onCreate(Bundle savedInstanceState) {
+    @SuppressLint("NewApi")
+	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
 
@@ -177,7 +187,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to one of the primary
      * sections of the app.
      */
-    public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+    static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
         public AppSectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -226,6 +236,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
                 Bundle savedInstanceState) {
         	
         	ParseQuery<ParseObject> queryOnCustomer = ParseQuery.getQuery("Customers");
+        	queryOnCustomer.orderByAscending("name");
         	queryOnCustomer.fromLocalDatastore();
         	List<ParseObject> customerObjectList = null;
         	List<ParseObject> customerObjectListToBeSend = new ArrayList<ParseObject>();
@@ -241,7 +252,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
         	queryOnCredit.fromLocalDatastore();
         	
         	ParseObject tempParseObject = null;
-        	
+        	allnames = new LinkedList<String>();
         	for(ParseObject customerParseObject : customerObjectList) {
         		tempParseObject = new ParseObject("AmountSum");
         		double sum=0;
@@ -256,11 +267,14 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
         		for(ParseObject tempP : creditObjectList) {
         			sum+=tempP.getDouble("amount");
         		}
-        		Log.i("Sum of Cost: "+customerParseObject.getString("name"), Double.toString(sum));
-        		tempParseObject.put("customerId", customerParseObject.getString("name"));
-        		tempParseObject.put("amount", sum);
-        		
-        		customerObjectListToBeSend.add(tempParseObject);
+        		if(sum>0) {
+        			Log.i("Sum of Cost: "+customerParseObject.getString("name"), Double.toString(sum));
+        			allnames.add(customerParseObject.getString("name"));
+        			tempParseObject.put("customerId", customerParseObject.getString("name"));
+        			tempParseObject.put("amount", sum);
+        			//tempParseObject.put("date", customerParseObject.getDate("createdAt"));
+        			customerObjectListToBeSend.add(tempParseObject);
+        		}
         	}
         	
         	
@@ -276,11 +290,20 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
             View rootView = inflater.inflate(R.layout.fragment_credit_list, container, false);
             
             CustomListCredit adapter = new CustomListCredit(getActivity(), customerObjectListToBeSend);
-            list=(ListView)rootView.findViewById(R.id.fragment_list_credit);
-            list.setAdapter(adapter);
-            
-            
+            list=(ListView) rootView.findViewById(R.id.fragment_list_credit);
+            list.setAdapter(adapter);       
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					String[] names =  allnames.toArray(new String[allnames.size()]);			
+					Intent a = new Intent(getActivity(),CredDetailList.class);
+					a.putExtra("selected", names[position]);
+	  	            startActivity(a);
+				}
+            	
+			});
+            
             return rootView;
         }
     }
@@ -294,24 +317,6 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
         
         ListView list;
         List<ParseObject> objects;
-        
-        String[] a = {
-    		    "Avdhesh Panwar",
-    		      "Abhishek Upperwal",
-    		      "Gaurav Gupta",
-    		      "Anurag Sharma",
-    		      "Pankaj Kumar",
-    		      "Brijesh Panwar"
-    		  } ;
-    	
-    	String[] b = {
-    		    "9999647130",
-    		      "9853744263",
-    		      "7825485725",
-    		      "9455654632",
-    		      "7343465453",
-    		      "9835927395"
-    		  } ;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -319,6 +324,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
             View rootView = inflater.inflate(R.layout.fragment_customers_list, container, false);
             
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Customers");
+            query.orderByAscending("name");
     		query.fromLocalDatastore();
     			try {
 					objects = query.find();
@@ -337,4 +343,6 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
             return rootView;
         }
     }
+    
+    
 }

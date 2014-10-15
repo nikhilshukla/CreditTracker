@@ -1,19 +1,12 @@
 package in.qubit.credittracker;
 
-import in.qubit.credittracker.assets.CustomListCredit;
 import in.qubit.credittracker.assets.CustomTypeface;
 
 import java.util.List;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.SaveCallback;
-
-import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,6 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
 public class AddCredit extends BaseActivity implements OnClickListener {
 	
 	android.app.ActionBar actionbar;
@@ -34,29 +33,21 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 	public ImageView sliderbtn;
 	ArrayAdapter<String> adapter;
 	List<ParseObject> obj;
-	
-	String[] androidBooks = 
-		{
-		"Hello, Android - Ed Burnette",
-		"Professional Android 2 App Dev - Reto Meier",
-		"Unlocking Android - Frank Ableson",
-		"Android App Development - Blake Meike",
-		"Pro Android 2 - Dave MacLean",
-		"Beginning Android 2 - Mark Murphy",
-		"Android Programming Tutorials - Mark Murphy",
-		"Android Wireless App Development - Lauren Darcey",
-		"Pro Android Games - Vladimir Silva",
-		};
+	ProgressDialog dialog;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		dialog = new ProgressDialog(this);
+		dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
 		
 		mDrawer.setContentView(R.layout.activity_add_credit);
 		actionbar = getActionBar();
 		actionbar.setDisplayShowHomeEnabled(false);
 		actionbar.setDisplayShowTitleEnabled(false);
 		LayoutInflater mInflater = LayoutInflater.from(this);
-
 		View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
 		TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text); 
 		mTitleTextView.setTypeface(CustomTypeface.helveticaLightItalic(this));
@@ -128,6 +119,7 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 	private boolean validate(String name, String amount) {
 		if(checkForCustomerInDatabase(name)) {
 			if(name.isEmpty() || amount.isEmpty()) {
+				dialog.dismiss();
 				Toast.makeText(getApplicationContext(), "Oops! Something is missing", 3000).show();
 				return false;
 			}
@@ -136,10 +128,19 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 			}
 		}
 		else {
+			dialog.dismiss();
 			Toast.makeText(getApplicationContext(), "Please choose customer name from suggestion.", 3000).show();
 			return false;
 		}
 	}
+	
+	/*public void onBackPressed() 
+	{
+		Intent a = new Intent(this,MainActivity.class);
+		 a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		 finish();
+		 startActivity(a);	 
+	}*/
 
 	@Override
 	public void onClick(View v) {
@@ -151,15 +152,23 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 			String notes = inputNotes.getText().toString();
 			
 			if(validate(name, amount)) {
+				dialog.setMessage("Adding Credit to this Customer.");
+		        dialog.show();
+		        
 				ParseObject object = new ParseObject("PendingMoney");
 				object.put("customerId", name);
 				object.put("amount", Float.parseFloat(amount));
 				object.put("notes", notes);
+				object.put("userId", ParseUser.getCurrentUser().getObjectId());
 				object.pinInBackground(new SaveCallback() {
 					
 					@Override
 					public void done(ParseException e) {
-						Toast.makeText(getApplicationContext(), "Saved on device", 2000).show();
+						dialog.dismiss();
+						Toast.makeText(getApplicationContext(), "Credit Successfully Added.", 2000).show();
+						finish();
+						Intent in = new Intent(AddCredit.this,MainActivity.class);
+						startActivity(in);
 					}
 				});
 				object.saveEventually(new SaveCallback() {
@@ -167,11 +176,12 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 					@Override
 					public void done(ParseException e) {
 						// TODO Auto-generated method stub
-						Toast.makeText(getApplicationContext(), "Saved on net", 4000).show();
+						Toast.makeText(getApplicationContext(), "Credit Saved on Cloud.", 2000).show();
 					}
 					
 				});
 			}
+			
 			break;
 //		case R.id.test:
 //			ParseQuery<ParseObject> query = ParseQuery.getQuery("Customers");

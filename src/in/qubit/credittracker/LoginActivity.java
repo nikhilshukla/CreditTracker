@@ -1,19 +1,27 @@
 package in.qubit.credittracker;
 
+import java.util.List;
+
 import in.qubit.credittracker.R;
 import in.qubit.credittracker.assets.CustomTypeface;
 
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,10 +37,13 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 	EditText username,password;
 	Button login, signUp;
 	TextView forgotPass, newUser;
+	Context thisContext;
+	ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		dialog = new ProgressDialog(this);
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		if(currentUser!=null) {
 			Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
@@ -51,11 +62,39 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 	
 	}
 	
+	private void saveDataOnLocalDatabase(String userId) {
+		ParseQuery<ParseObject> queryCustomers = ParseQuery.getQuery("Customers");
+		queryCustomers.whereEqualTo("userId", userId);
+		try {
+			List<ParseObject> objects = queryCustomers.find();
+			if(!objects.isEmpty()) {
+				ParseObject.pinAllInBackground(objects);
+				
+				ParseQuery<ParseObject> queryCredit = ParseQuery.getQuery("PendingMoney");
+				queryCredit.whereEqualTo("userId", userId);
+				List<ParseObject> objectsCredit = queryCredit.find();
+				if(!objectsCredit.isEmpty()) {
+					ParseObject.pinAllInBackground(objectsCredit);
+					dialog.dismiss();
+				}
+			}
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
 	private void login(String username, String password) {
+		dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		dialog.setMessage("Welcome back!");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.show();
 		ParseUser.logInInBackground(username, password, new LogInCallback() {
 			@Override
 			public void done(ParseUser user, ParseException e) {
 				if(user != null) {
+					saveDataOnLocalDatabase(user.getObjectId());
 					Log.d("Login", "Success");
 					Toast toast = Toast.makeText(getApplicationContext(), "Login Success.", 2000);
 					toast.show();
@@ -63,6 +102,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 					startActivity(mainActivity);
 				}
 				else {
+					dialog.dismiss();
 					Log.d("Login", "Fail");
 					Toast toast = Toast.makeText(getApplicationContext(), "Username or Password is incorrect.", 2000);
 					toast.show();
@@ -93,6 +133,9 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 		}
 		else if(passwordText.isEmpty()) {
 			Toast.makeText(getApplicationContext(), "Enter Password", 3000).show();
+		}
+		else if(!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+			Toast.makeText(getApplicationContext(), "Please enter a valid email address.", 4000).show();
 		}
 		else {
 			login(usernameText, passwordText);

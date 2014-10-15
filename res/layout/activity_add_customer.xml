@@ -19,6 +19,9 @@
 
     </LinearLayout>
 
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +40,7 @@
             android:gravity="center_vertical"
             android:hint="Name"
             android:imeOptions="actionNext"
-            android:inputType="text"
+            android:inputType="text|textCapWords"
             android:singleLine="true"
             android:textSize="15sp" >
 
@@ -71,6 +74,8 @@
             android:textSize="15sp" />
 
     </LinearLayout>
+    
+    </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -78,6 +83,7 @@
         android:gravity="bottom|center_horizontal" >
 
         <LinearLayout
+            android:id="@+id/button_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bottom_bar"
