@@ -1,5 +1,7 @@
 package in.qubit.credittracker.assets;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 import com.parse.FindCallback;
@@ -21,6 +23,7 @@ public class CustomListCredit extends ArrayAdapter<ParseObject> {
 	private final Activity context;
 	List<ParseObject> parseObjectList;
 	String[] name;
+	final NumberFormat formater = new DecimalFormat("##,##,##,###.##");
 	
 	public CustomListCredit(Activity context, List<ParseObject> objects) {
 		super(context, R.layout.single_list_item_drawer, objects);
@@ -43,7 +46,7 @@ public class CustomListCredit extends ArrayAdapter<ParseObject> {
 		name.setTypeface(CustomTypeface.comicRelief(context));
 		date.setText("21st September, 2014");
 		date.setTypeface(CustomTypeface.comicRelief(context));
-		amount.setText(Double.toString(parObject.getDouble("amount")));
+		amount.setText(formater.format(parObject.getDouble("amount")));
 		amount.setTypeface(CustomTypeface.comicRelief(context));
 		
 		

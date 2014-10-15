@@ -35,7 +35,6 @@ public class AddCustomer extends BaseActivity {
 	public ImageView sliderbtn;
 	String name,phone,address;
 	int cust_counter=0;
-	int press_flag=1;
 	//LinearLayout but_lay;
 	ParseObject object;
 	ProgressDialog dialog;
@@ -88,8 +87,6 @@ public class AddCustomer extends BaseActivity {
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
-				if(press_flag==1)
-				{
 				name = inputName.getText().toString();
 				phone = inputPhone.getText().toString();
 				address = inputAddress.getText().toString();
@@ -139,8 +136,6 @@ public class AddCustomer extends BaseActivity {
 					});
 				}
 				//but_lay.setBackgroundDrawable(getResources().getDrawable(R.drawable.bottom_bar_dim));
-			}			
-				press_flag=0;
 			}
 		});
 		
@@ -151,7 +146,8 @@ public class AddCustomer extends BaseActivity {
 	/*public void onBackPressed() 
 	{
 		Intent a = new Intent(this,MainActivity.class);
-		 a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		 a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		 finish();
 		 startActivity(a);	 
 	}*/
 	

@@ -65,32 +65,23 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 	private void saveDataOnLocalDatabase(String userId) {
 		ParseQuery<ParseObject> queryCustomers = ParseQuery.getQuery("Customers");
 		queryCustomers.whereEqualTo("userId", userId);
-		queryCustomers.findInBackground(new FindCallback<ParseObject>() {
-
-			@Override
-			public void done(List<ParseObject> objects, ParseException e) {
-				// TODO Auto-generated method stub
-				if(e == null) {
-					ParseObject.pinAllInBackground(objects);
-				}
-			}
-			
-		});
-		
-		ParseQuery<ParseObject> queryCredit = ParseQuery.getQuery("PendingMoney");
-		queryCredit.whereEqualTo("userId", userId);
-		queryCredit.findInBackground(new FindCallback<ParseObject>() {
-
-			@Override
-			public void done(List<ParseObject> objects, ParseException e) {
-				// TODO Auto-generated method stub
-				if(e == null) {
-					ParseObject.pinAllInBackground(objects);
+		try {
+			List<ParseObject> objects = queryCustomers.find();
+			if(!objects.isEmpty()) {
+				ParseObject.pinAllInBackground(objects);
+				
+				ParseQuery<ParseObject> queryCredit = ParseQuery.getQuery("PendingMoney");
+				queryCredit.whereEqualTo("userId", userId);
+				List<ParseObject> objectsCredit = queryCredit.find();
+				if(!objectsCredit.isEmpty()) {
+					ParseObject.pinAllInBackground(objectsCredit);
 					dialog.dismiss();
 				}
 			}
-			
-		});
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 	private void login(String username, String password) {

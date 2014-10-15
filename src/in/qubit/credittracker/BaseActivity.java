@@ -67,23 +67,31 @@ public class BaseActivity extends FragmentActivity
 				
 				case 0:
 					if(currentActivity.compareTo(MainActivity.class.getName())!=0) {
+						finish();
 						Intent mainActivity = new Intent(BaseActivity.this, MainActivity.class);
+						mainActivity.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 						startActivity(mainActivity);
 					}
 					mDrawer.closeMenu();
 					break;
 				case 1:
 					if(currentActivity.compareTo(AddCustomer.class.getName())!=0) {
+						if(currentActivity.compareTo(MainActivity.class.getName())!=0) {
+							finish();
+						}
 						Intent addCustomerActivity = new Intent(BaseActivity.this, AddCustomer.class);
-						addCustomerActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						addCustomerActivity.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 						startActivity(addCustomerActivity);
 					}
 					mDrawer.closeMenu();
 					break;
 				case 2:
 					if(currentActivity.compareTo(AddCredit.class.getName())!=0) {
+						if(currentActivity.compareTo(MainActivity.class.getName())!=0) {
+							finish();
+						}
 						Intent addCreditActivity = new Intent(BaseActivity.this, AddCredit.class);
-						addCreditActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						addCreditActivity.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 						startActivity(addCreditActivity);
 					}
 					mDrawer.closeMenu();

@@ -34,7 +34,6 @@
             android:name="in.qubit.credittracker.RegistrationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"
-            android:noHistory="true"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.REGISTRATION" />
@@ -46,7 +45,8 @@
             android:name="in.qubit.credittracker.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAINACT" />
 

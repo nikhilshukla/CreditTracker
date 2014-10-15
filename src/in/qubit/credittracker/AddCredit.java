@@ -137,7 +137,8 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 	/*public void onBackPressed() 
 	{
 		Intent a = new Intent(this,MainActivity.class);
-		 a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		 a.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+		 finish();
 		 startActivity(a);	 
 	}*/
 
@@ -166,6 +167,8 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 						dialog.dismiss();
 						Toast.makeText(getApplicationContext(), "Credit Successfully Added.", 2000).show();
 						finish();
+						Intent in = new Intent(AddCredit.this,MainActivity.class);
+						startActivity(in);
 					}
 				});
 				object.saveEventually(new SaveCallback() {
@@ -178,8 +181,6 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 					
 				});
 			}
-			Intent in = new Intent(AddCredit.this,MainActivity.class);
-			startActivity(in);
 			
 			break;
 //		case R.id.test:

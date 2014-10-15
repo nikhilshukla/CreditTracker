@@ -4,6 +4,8 @@ import in.qubit.credittracker.assets.CustomListCredit;
 import in.qubit.credittracker.assets.CustomListCustomer;
 import in.qubit.credittracker.assets.CustomTypeface;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -234,6 +236,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
                 Bundle savedInstanceState) {
         	
         	ParseQuery<ParseObject> queryOnCustomer = ParseQuery.getQuery("Customers");
+        	queryOnCustomer.orderByAscending("name");
         	queryOnCustomer.fromLocalDatastore();
         	List<ParseObject> customerObjectList = null;
         	List<ParseObject> customerObjectListToBeSend = new ArrayList<ParseObject>();
@@ -264,12 +267,14 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
         		for(ParseObject tempP : creditObjectList) {
         			sum+=tempP.getDouble("amount");
         		}
-        		Log.i("Sum of Cost: "+customerParseObject.getString("name"), Double.toString(sum));
-        		allnames.add(customerParseObject.getString("name"));
-        		tempParseObject.put("customerId", customerParseObject.getString("name"));
-        		tempParseObject.put("amount", sum);
-        		
-        		customerObjectListToBeSend.add(tempParseObject);
+        		if(sum>0) {
+        			Log.i("Sum of Cost: "+customerParseObject.getString("name"), Double.toString(sum));
+        			allnames.add(customerParseObject.getString("name"));
+        			tempParseObject.put("customerId", customerParseObject.getString("name"));
+        			tempParseObject.put("amount", sum);
+        			//tempParseObject.put("date", customerParseObject.getDate("createdAt"));
+        			customerObjectListToBeSend.add(tempParseObject);
+        		}
         	}
         	
         	
@@ -312,24 +317,6 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
         
         ListView list;
         List<ParseObject> objects;
-        
-        String[] a = {
-    		    "Avdhesh Panwar",
-    		      "Abhishek Upperwal",
-    		      "Gaurav Gupta",
-    		      "Anurag Sharma",
-    		      "Pankaj Kumar",
-    		      "Brijesh Panwar"
-    		  } ;
-    	
-    	String[] b = {
-    		    "9999647130",
-    		      "9853744263",
-    		      "7825485725",
-    		      "9455654632",
-    		      "7343465453",
-    		      "9835927395"
-    		  } ;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -337,6 +324,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
             View rootView = inflater.inflate(R.layout.fragment_customers_list, container, false);
             
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Customers");
+            query.orderByAscending("name");
     		query.fromLocalDatastore();
     			try {
 					objects = query.find();
