@@ -44,7 +44,7 @@ public class CustomListCredit extends ArrayAdapter<ParseObject> {
 		ParseObject parObject = this.parseObjectList.get(position);
 		name.setText(parObject.getString("customerId"));
 		name.setTypeface(CustomTypeface.comicRelief(context));
-		date.setText("21st September, 2014");
+		date.setText(parObject.getString("date"));
 		date.setTypeface(CustomTypeface.comicRelief(context));
 		amount.setText(formater.format(parObject.getDouble("amount")));
 		amount.setTypeface(CustomTypeface.comicRelief(context));

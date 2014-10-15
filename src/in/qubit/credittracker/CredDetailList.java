@@ -1,5 +1,9 @@
 package in.qubit.credittracker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,8 +39,11 @@ public class CredDetailList extends BaseActivity
 	Bundle extras;
 	public ImageView sliderbtn;
 	TextView mTitleTextView;
-	List notelist,datelist,moneylist;
-	ListView money;
+	List<String> nlist;
+	List<Date> dlist; 
+	List<Integer> mlist;
+	List<String> sdlist,smlist;
+	ListView mainlist;
 	
 	@SuppressWarnings("null")
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +55,7 @@ public class CredDetailList extends BaseActivity
 	actionbar.setDisplayShowTitleEnabled(false);
 	extras = getIntent().getExtras();
 	user= extras.getString("selected");
-	String[] mlist;
+	ListViewCustomAdapter adapter;
 	
 	LayoutInflater mInflater = LayoutInflater.from(this);
 
@@ -59,7 +66,7 @@ public class CredDetailList extends BaseActivity
 	actionbar.setCustomView(mCustomView);
 	actionbar.setDisplayShowCustomEnabled(true);
 	
-	money = (ListView) findViewById(R.id.fragment_list_credit_detail);
+	mainlist = (ListView) findViewById(R.id.fragment_list_credit_detail);
 	sliderbtn = (ImageView) findViewById(R.id.actionslide);
 	sliderbtn.setOnClickListener(new OnClickListener() {
 		
@@ -84,37 +91,44 @@ public class CredDetailList extends BaseActivity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		notelist = new LinkedList();
-		moneylist = new LinkedList();
-		datelist = new LinkedList();
+		/*nlist =  new ArrayList<String>();
+		dlist = new ArrayList<Date>();
+		mlist =  new ArrayList<Integer>();
+		smlist = new ArrayList<String>();
+		sdlist = new ArrayList<String>();
 		
 		for(ParseObject pobj : creditObjectList)
 		{
-			moneylist.add(pobj.getInt("amount"));
-			notelist.add(pobj.getString("notes"));
-			datelist.add(pobj.getDate("createdAt"));
+			mlist.add(pobj.getInt("amount"));       //data in integer
+			nlist.add(pobj.getString("notes"));     //data in string
+			dlist.add(pobj.getDate("createdAt"));   //data in date
 		}
 		
-		//mlist =  moneylist.toArray(new String[moneylist.size()]);
-		ArrayAdapter<String> listAdapter = new CustomListAdapter(this, R.layout.single_list_item_credit_detail);
+		Iterator itr1 = mlist.iterator();
+		while (itr1.hasNext()) 
+		{
+			smlist.add(String.valueOf(itr1.next()));
+			
+		}
+		DateFormat df = new SimpleDateFormat("MMM dd,yyyy, HH:mm");
+		Iterator itr2 = dlist.iterator();
+		while (itr2.hasNext()) 
+		{
+			sdlist.add(df.format(itr2.next()));
+			
+		}
+		
+		
+		String[] moneylist =   smlist.toArray(new String[smlist.size()]);
+		String[] notelist =  nlist.toArray(new String[nlist.size()]);
+		String[] datelist =  sdlist.toArray(new String[sdlist.size()]);
+		
+			
+		adapter = new ListViewCustomAdapter(this, notelist, moneylist, datelist);
+        mainlist.setAdapter(adapter);*/
+
 	}
 	
-	class CustomListAdapter extends ArrayAdapter<String> {
-	    public CustomListAdapter(Context context, int textViewResourceId) {
-	        super(context, textViewResourceId);
-	    }
-
-	    @Override
-	    public View getView(int position, View convertView, ViewGroup parent) {
-       
-	        ((TextView)convertView.findViewById(R.id.credit_list_notes)).setText(getItem(position));
-	        ((TextView)convertView.findViewById(R.id.credit_list_date)).setText(getItem(position));
-	        ((TextView)convertView.findViewById(R.id.credit_list_amount)).setText(getItem(position));
-	        
-	        
-	        return convertView;
-	    }
-	}
 
 
 }
