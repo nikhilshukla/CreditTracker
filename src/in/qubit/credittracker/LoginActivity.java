@@ -4,6 +4,7 @@ import java.util.List;
 
 import in.qubit.credittracker.R;
 import in.qubit.credittracker.assets.CustomTypeface;
+import in.qubit.credittracker.assets.InternetConnectivity;
 
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
@@ -147,7 +148,12 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 		// TODO Auto-generated method stub
 		switch(v.getId()) {
 		case R.id.lgoinbtn:
-			validateAndLogin();
+			if(InternetConnectivity.isNetworkOnline(this)) {
+				validateAndLogin();
+			}
+			else {
+				Toast.makeText(this, "You are not connected to the Internet.", 3000).show();
+			}
 			Log.d("Switch", "Login Btn");
 			break;
 		case R.id.signUpButton:

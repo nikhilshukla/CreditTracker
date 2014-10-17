@@ -1,6 +1,13 @@
 package in.qubit.credittracker;
 
+import in.qubit.credittracker.assets.CustomTypeface;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.List;
+
+import com.parse.ParseObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,29 +19,22 @@ import android.widget.TextView;
 
 public class ListViewCustomAdapter extends BaseAdapter
 {
-	public String note[];
-	public String money[];
-	public String date[];
 
 	public Activity context;
 	public LayoutInflater inflater;
+	private List<ParseObject> _creditOfSingleCustomer;
+	final NumberFormat formater = new DecimalFormat("##,##,##,###.##");
 
-	public ListViewCustomAdapter(Activity context,String[] note, String[] money, String[] date) {
+	public ListViewCustomAdapter(Activity context, List<ParseObject> creditOfSingleCustomer) {
 		super();
 
 		this.context = context;
-		this.note = note;
-		this.money = money;
-		this.date = date;
-
+		this._creditOfSingleCustomer = creditOfSingleCustomer;
+		
 	    this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
-	@Override
-	public int getCount() {
-		// TODO Auto-generated method stub
-		return note.length;
-	}
+	
 
 	@Override
 	public Object getItem(int position) {
@@ -74,11 +74,23 @@ public class ListViewCustomAdapter extends BaseAdapter
 		else
 			holder=(ViewHolder)convertView.getTag();
 
-		holder.txtViewdate.setText(date[position]);
-		holder.txtViewnote.setText(note[position]);
-		holder.txtViewmoney.setText(money[position]);
+		holder.txtViewdate.setTypeface(CustomTypeface.comicRelief(context));
+		holder.txtViewdate.setText(this._creditOfSingleCustomer.get(position).getString("creditDate"));
+		holder.txtViewnote.setTypeface(CustomTypeface.comicRelief(context));
+		holder.txtViewnote.setText(this._creditOfSingleCustomer.get(position).getString("notes"));
+		holder.txtViewmoney.setTypeface(CustomTypeface.comicRelief(context));
+		holder.txtViewmoney.setText(formater.format(this._creditOfSingleCustomer.get(position).getDouble("amount")));
+		
 
 		return convertView;
+	}
+
+
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return this._creditOfSingleCustomer.size();
 	}
 
 }

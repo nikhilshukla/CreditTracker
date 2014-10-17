@@ -54,7 +54,7 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 		View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
 		TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text); 
 		mTitleTextView.setTypeface(CustomTypeface.helveticaLightItalic(this));
-		mTitleTextView.setText("Add Credit\t");
+		mTitleTextView.setText("Add Credit\t\t");
 		actionbar.setCustomView(mCustomView);
 		actionbar.setDisplayShowCustomEnabled(true);
 		
