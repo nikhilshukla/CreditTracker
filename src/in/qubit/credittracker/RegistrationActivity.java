@@ -5,6 +5,7 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import in.qubit.credittracker.assets.CustomTypeface;
+import in.qubit.credittracker.assets.InternetConnectivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -115,7 +116,12 @@ public class RegistrationActivity extends ActionBarActivity implements OnClickLi
 		// TODO Auto-generated method stub
 		switch(v.getId()) {
 		case R.id.button_register:
-			validate();
+			if(InternetConnectivity.isNetworkOnline(this)) {
+				validate();
+			}
+			else {
+				Toast.makeText(this, "You are not connected to the Internet.", 3000).show();
+			}
 			break;	
 		}
 	}

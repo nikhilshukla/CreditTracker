@@ -249,6 +249,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
 			}
         	
         	ParseQuery<ParseObject> queryOnCredit = ParseQuery.getQuery("PendingMoney");
+        	queryOnCredit.orderByDescending("createdAt");
         	queryOnCredit.fromLocalDatastore();
         	
         	ParseObject tempParseObject = null;
@@ -272,6 +273,7 @@ public class ListActivity extends BaseActivity implements ActionBar.TabListener 
         			allnames.add(customerParseObject.getString("name"));
         			tempParseObject.put("customerId", customerParseObject.getString("name"));
         			tempParseObject.put("amount", sum);
+        			tempParseObject.put("date", creditObjectList.get(0).getString("creditDate"));
         			//tempParseObject.put("date", customerParseObject.getDate("createdAt"));
         			customerObjectListToBeSend.add(tempParseObject);
         		}

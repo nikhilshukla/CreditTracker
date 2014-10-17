@@ -20,7 +20,7 @@
             android:src="@drawable/icon_user_incircle" />
 
         <LinearLayout
-            android:layout_width="155dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 

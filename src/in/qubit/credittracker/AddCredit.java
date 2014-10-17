@@ -2,7 +2,10 @@ package in.qubit.credittracker;
 
 import in.qubit.credittracker.assets.CustomTypeface;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -51,7 +54,7 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 		View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
 		TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text); 
 		mTitleTextView.setTypeface(CustomTypeface.helveticaLightItalic(this));
-		mTitleTextView.setText("Add Credit\t");
+		mTitleTextView.setText("Add Credit\t\t");
 		actionbar.setCustomView(mCustomView);
 		actionbar.setDisplayShowCustomEnabled(true);
 		
@@ -151,6 +154,8 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 			String amount = inputAmount.getText().toString();
 			String notes = inputNotes.getText().toString();
 			
+			SimpleDateFormat creditDate = new SimpleDateFormat("dd MMMM yyyy", Locale.UK);
+			
 			if(validate(name, amount)) {
 				dialog.setMessage("Adding Credit to this Customer.");
 		        dialog.show();
@@ -159,6 +164,7 @@ public class AddCredit extends BaseActivity implements OnClickListener {
 				object.put("customerId", name);
 				object.put("amount", Float.parseFloat(amount));
 				object.put("notes", notes);
+				object.put("creditDate", creditDate.format(new Date()));
 				object.put("userId", ParseUser.getCurrentUser().getObjectId());
 				object.pinInBackground(new SaveCallback() {
 					
